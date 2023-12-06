@@ -19,7 +19,6 @@ suppressMessages(library(irlba))
 library(dplyr)
 
 
-
 combined_data = readRDS("combined_data.rds")
 
 num_hvg <- 5000 # 
@@ -101,7 +100,7 @@ plot_1 <- DimPlot(combined_data,reduction = 'umap' , label = T, group.by = "cell
 
 
 
-#umap based on pca from the paper
+#umap based on the pca from the rds object from the original paper
 combined_data = readRDS("combined_data.rds")
 combined_data <- RunUMAP(object = combined_data, dims = 1:50, reduction = 'pca')
 DimPlot(combined_data,reduction = 'umap' , label = T, group.by = "cell_type_coarse" ,repel = TRUE, 
