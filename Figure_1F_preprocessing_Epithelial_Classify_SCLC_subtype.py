@@ -14,7 +14,9 @@ os.makedirs(out_dir, exist_ok=True)
 
 ### This is the code to do the subtype scording using the George et al. bulk study
 ### Require a parsed h5ad file (included the scaling, PCA and DiffusionMap processing in this code)
-### Can be downloaded at https://data.humantumoratlas.org/
+### Load the all Epithelial cell object
+### This dataset can be found here: https://cellxgene.cziscience.com/collections/62e8f058-9c37-48bc-9200-e767f318a8ec
+
 adata = sc.read_h5ad('Epithelial.h5ad')
 
 '''
