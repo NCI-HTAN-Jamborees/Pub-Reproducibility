@@ -11,16 +11,9 @@ library(clustree)
 library(future)
 library(pheatmap)
 library(ggpubr)
-library(jjb)
 
-save_plot_pdf <- function(x, filename, width=a, height=b) {
-  stopifnot(!missing(x))
-  stopifnot(!missing(filename))
-  pdf(filename, width=width, height=height)
-  # grid::grid.newpage()
-  grid::grid.draw(x)
-  dev.off()
-}
+### Load the all cell object
+### This dataset can be found here: https://cellxgene.cziscience.com/collections/62e8f058-9c37-48bc-9200-e767f318a8ec
 
 #### Convert the geneID (rownames(dge)) to gene symbols using the meta features
 #### Re-make the RNA assay
