@@ -1,6 +1,32 @@
 
+library(Seurat)
+library(cowplot)
+library(dplyr)
+library(ggplot2)
+library(data.table)
+library(ggrepel)
+library(tidyr)
+library(textshape)
+library(clustree)
+library(future)
+library(pheatmap)
+library(ggpubr)
+library(ggtern)
+
+###Load the SCLC Epithelial cell object
+###This dataset can be found here: https://cellxgene.cziscience.com/collections/62e8f058-9c37-48bc-9200-e767f318a8ec
+
 ####Figure S2A
 ###Subtype Diversity and Frequency
+dge<-readRDS("./SCLC_Epithelial.rds")
+
+metadata_df = dge@meta.data
+metadata_df$batch = as.character(metadata_df$batch)
+metadata_df$batch[grepl('RU1108',metadata_df$batch)] = 'RU1108a'
+#### Notice: might need to change "." to "-"
+metadata_df$subtype_uncertainty = apply(metadata_df[,c("pval_SCLC.A","pval_SCLC.N","pval_SCLC.P")], 1, function(x) entropy(x))
+any(is.nan(metadata_df$subtype_uncertainty))
+                                        
 subtype_freq = metadata_df %>% dplyr::group_by(donor_id, SCLC_subtype) %>% dplyr::summarise(n=n()) %>% dplyr::mutate(freq = n/sum(n)) %>% 
   dplyr::select(-n) %>% pivot_wider(names_from = SCLC_subtype, values_from = freq) 
 subtype_freq = as.data.frame(subtype_freq)
@@ -42,70 +68,4 @@ grid.newpage()
 grid.draw(rbind(ggplotGrob(p0), ggplotGrob(p1), size = "last"))
 
 ####Done
-dge <- NormalizeData(object = dge, normalization.method = "LogNormalize", scale.factor = 10000)
 
-dge <- FindVariableFeatures(object = dge, selection.method = "vst", nfeatures =3000)
-
-# all.genes <- rownames(x = dge)
-dge <- ScaleData(object=dge,features=VariableFeatures(object = dge))
-dge <- RunPCA(object = dge, features = VariableFeatures(object=dge),npcs = 100)
-
-
-# Create a vector of gene names for downstream analysis
-#gene.names.vector <- as.character("gene names")
-# Run PCA on selected genes
-#dge <- RunPCA(object = dge, features = gene.names.vector, do.print = TRUE, pcs.print = 1:5, 
-#                 genes.print = 5)
-
-slot(dge[["pca"]], "misc")
-print(x = dge[["pca"]], dims = 1:5, nfeatures = 5)
-mat <- Seurat::GetAssayData(dge,assay="RNA",slot="scale.data")
-pca <-dge[["pca"]]
-total_variance <- sum(matrixStats::rowVars(mat))
-eigValues = (pca@stdev)^2
-varExplained = eigValues / total_variance
-sum(varExplained)
-
-DimPlot(object = dge, reduction = "pca",group.by = "donor_id",raster = T)
-ggsave(file="PCA_bydonor.pdf",width = 20,height = 20,units = "cm")
-
-png("Elbowplot_dge.png")
-ElbowPlot(dge,ndims = 100)
-dev.off()
-
-
-n_pc=100
-
-dge <- RunUMAP(dge, dims = 1:100)
-
-
-DimPlot(dge, reduction = "umap",group.by="cell_type_fine",label=T,raster = T)
-ggsave(file="Umap_fineID.pdf",width = 20,height = 15)
-
-DimPlot(dge, reduction = "umap",group.by="donor_id",label=T,raster = T)
-ggsave(file="Umap_donor.pdf",width = 20,height = 15)
-
-####Figure 1H
-p1<-FeaturePlot(dge,features=c("ASCL1"),cols = c("purple","red","yellow"))
-p2<-FeaturePlot(dge,features=c("NEUROD1"),cols = c("purple","red","yellow"))
-p3<-FeaturePlot(dge,features=c("POU2F3"),cols = c("purple","red","yellow"))
-p4<-FeaturePlot(dge,features=c("YAP1"),cols = c("purple","red","yellow"))
-grid.arrange(p1, p2, p3, p4, ncol = 2)
-
-###Make the tumor object
-dge<-subset(Epithelial,cells=colnames(Epithelial)[Epithelial$cell_type_fine %in% c("SCLC-A","SCLC-N","SCLC-P")])
-
-####Figure 2A
-dge<-SetIdent(dge,value = as.vector(dge$cell_type_fine))
-dge@active.ident<-factor(dge@active.ident,levels = c("SCLC-A","SCLC-N","SCLC-P"))
-Genelist<-c("ASCL1","TFF3","SOX4","KLF6","NEUROD1","NEUROD4","POU2F3","ASCL2",
-            "SOX9","YBX3","HOXC10","YAP1","MYC","MYCN","MYCL","NOTCH1","HES6",
-            "HES1","TCF4","MARCKS","ADCYAP1","NRXN1","SEMA6A","EFNB1","EPHB2",
-            "NRP2","OLFM2","SSTR2","SST","SOX7","INHBA","HIF1A","VEGFA","FOXO3","VIM",
-            "COL1A2","TWIST1","ZEB1","MMP2","MMP14","TGFB1","TGFBR1","TGFBR3","BMP3","BMP7",
-            "BMPR1A","BMPR2","STAT3","IL6R","IL11RA","IL13RA1","TNF","PHLDA1","SMAD3",
-            "SPHK1","NFAT5")
-
-DotPlot(dge, features = rev(Genelist), cols = "RdBu")+
-  theme(axis.text.x = element_text( angle = 90, vjust = 0.5, hjust = 1))+coord_flip()
-ggsave(file="Figure2A_Replicate.pdf",width = 8,height = 15)
