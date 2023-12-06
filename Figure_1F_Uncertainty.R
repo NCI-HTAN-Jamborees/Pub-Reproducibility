@@ -11,29 +11,19 @@ library(clustree)
 library(future)
 library(pheatmap)
 library(ggpubr)
-library(jjb)
 
 
 
-####Make Epithelial subset
-options(future.globals.maxSize = 80000 * 1024^2)
-setwd("/Volumes/Backup_Plus/HTAN/Epithelial/")
-dge<-readRDS("../Overall_HTAN.rds")
-dge<-subset(dge,cells=colnames(dge)[dge$cell_type_coarse=="Epithelial"])
-library(stringr)
-library("ggplot2")
-library("dplyr")
-library('reshape2')
-#library(entropy)
-library(tidyr)
-library(plyr)
-library(entropy)
-library(ggrepel)
-library(RColorBrewer)
-library(pals)
+#### Make Epithelial subset
+### Load the all cell object
+### This dataset can be found here: https://cellxgene.cziscience.com/collections/62e8f058-9c37-48bc-9200-e767f318a8ec
 
-Train_data<-read.table("./Epithelial_metadata.csv",sep=",",header = T,row.names = 1)
-dge@meta.data<-cbind(dge@meta.data,Train_data[,43:46])
+dge <- readRDS("./All_Cell.rds")
+dge <- subset(dge,cells=colnames(dge)[dge$cell_type_coarse=="Epithelial"])
+
+### This csv file is the output for the python code.
+Train_data <- read.table("./Epithelial_metadata.csv",sep=",",header = T,row.names = 1)
+dge@meta.data <- cbind(dge@meta.data,Train_data[,43:46])
 
 
 ####Uncertainty analysis Figure 1F
