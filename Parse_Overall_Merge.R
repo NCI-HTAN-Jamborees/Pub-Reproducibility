@@ -25,8 +25,8 @@ save_plot_pdf <- function(x, filename, width=a, height=b) {
 #### Convert the geneID (rownames(dge)) to gene symbols using the meta features
 #### Re-make the RNA assay
 RNA <- dge@assays$RNA
-RNA@counts@Dimnames[[1]]            <- as.vector(Features$feature_name)
-RNA@data@Dimnames[[1]]                <- as.vector(Features$feature_name)
+RNA@counts@Dimnames[[1]] <- as.vector(Features$feature_name)
+RNA@data@Dimnames[[1]] <- as.vector(Features$feature_name)
 dge@assays$RNA <- RNA
 
 #### Re-create a Seurat object for re-processing. 
