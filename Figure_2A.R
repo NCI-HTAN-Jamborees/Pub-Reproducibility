@@ -1,6 +1,24 @@
+library(Seurat)
+library(cowplot)
+library(dplyr)
+library(ggplot2)
+library(data.table)
+library(ggrepel)
+library(tidyr)
+library(textshape)
+library(clustree)
+library(future)
+library(pheatmap)
+library(ggpubr)
+library(ggtern)
 
+###Load the SCLC Epithelial cell object
+###This dataset can be found here: https://cellxgene.cziscience.com/collections/62e8f058-9c37-48bc-9200-e767f318a8ec
 
-####Figure 2A
+####Figure 2A dotplot
+
+dge<-readRDS("./SCLC_Epithelial.rds")
+
 dge<-SetIdent(dge,value = as.vector(dge$SCLC_subtype))
 dge@active.ident<-factor(dge@active.ident,levels = c("SCLC-A","SCLC-N","SCLC-P"))
 Genelist<-c("ASCL1","TFF3","SOX4","KLF6","NEUROD1","NEUROD4","POU2F3","ASCL2",
