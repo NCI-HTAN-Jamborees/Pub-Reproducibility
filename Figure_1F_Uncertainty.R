@@ -13,15 +13,6 @@ library(pheatmap)
 library(ggpubr)
 library(jjb)
 
-save_plot_pdf <- function(x, filename, width=a, height=b) {
-  stopifnot(!missing(x))
-  stopifnot(!missing(filename))
-  pdf(filename, width=width, height=height)
-  # grid::grid.newpage()
-  grid::grid.draw(x)
-  dev.off()
-}
-
 
 
 ####Make Epithelial subset
