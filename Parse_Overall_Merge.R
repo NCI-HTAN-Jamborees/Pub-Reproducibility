@@ -22,13 +22,17 @@ save_plot_pdf <- function(x, filename, width=a, height=b) {
   dev.off()
 }
 
-
+#### Convert the geneID (rownames(dge)) to gene symbols using the meta features
+#### Re-make the RNA assay
 RNA <- dge@assays$RNA
 RNA@counts@Dimnames[[1]]            <- as.vector(Features$feature_name)
 RNA@data@Dimnames[[1]]                <- as.vector(Features$feature_name)
 dge@assays$RNA <- RNA
 
+#### Re-create a Seurat object for re-processing. 
+#### Note: If users want to skip this and re-use the computed UMAP in the manuscript, JUMP to LINE 93
 
+#### Start Re-processing 
 dge<-CreateSeuratObject(counts = dge@assays$RNA@counts,meta.data = dge@meta.data)
 #dge<-readRDS("/wynton/group/fhuang/Atlas/RPCA_Atlas_integrated_clustered.rds")
 ####Top_tier annotation
@@ -78,15 +82,14 @@ sum(varExplained)
 
 DimPlot(object = dge, reduction = "pca",group.by = "donor_id",raster = T)
 ggsave(file="PCA_bydonor.pdf",width = 20,height = 20,units = "cm")
-
 png("Elbowplot_dge.png")
 ElbowPlot(dge,ndims = 100)
 dev.off()
-
-
+#### Use 100 PCs for UMAP (from the elbowplot)
 n_pc=100
-
 dge <- RunUMAP(dge, dims = 1:100)
+#### Done re-processing and re-compute UMAP
+#### Skip to here if want to use the paper-computed UMAP
 DimPlot(dge, reduction = "umap",label=T,group.by = "cell_type_coarse",raster = T)+NoLegend()
 ggsave(file="Umap_raw_type.pdf",width = 20,height = 20,units = "cm")
 
