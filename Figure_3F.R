@@ -78,7 +78,7 @@ p = plot_df %>% ggplot(aes(x = rank,y = log_pval, label = top_label)) + geom_poi
   geom_text_repel(segment.color = 'lightgray', segment.alpha= 0.5, max.overlaps = 20) +
   theme(legend.position = 'none',panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
 
-ggsave("Fig3F_Genes_ordered_by_recurrence_score.pdf",height = 4.3,width = 5.3)
+ggsave("Fig3F_Genes_ordered_by_recurrence_score.pdf",p,height = 4.3,width = 5.3)
 
 
 # > sessionInfo()
