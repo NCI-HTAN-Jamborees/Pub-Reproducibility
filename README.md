@@ -43,7 +43,7 @@ We are focusing on assessing single cell data reproducibilty defined by:
 * For panels that we cannot replicate, we showed qualitatively comparable results
 * The original study performed fastMNN integration to remove patient-specific heterogeneity, but during the data replication, we did not see any major differences in DEGs due to that. Therefore the integration was only targeting the patient-specific tumor heterogeneity. 
 
-![all_cells_reproduciibility.png]
+![all_cells](all_cells_reproduciibility.png)
 
 **Team**
 -------
