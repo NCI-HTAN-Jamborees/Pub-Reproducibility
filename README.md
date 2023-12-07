@@ -2,16 +2,26 @@
 NCI Human Tumor Atlas Network (HTAN) Data Jamboree | Dec. 4-7, 2023
 
 
-## Introduction 
-Data reproducibility is a fundamental principle in science and allows for scientific validation, progress, and for the scientific community to build on each other's findings. Transparency of data and methods is applicable in all scientific fields, including single cell. [(article)](https://www.nature.com/articles/d42473-019-00004-y)
+**Introduction**
+-------
+Data reproducibility is a fundamental principle in science and allows for scientific validation, confidence in research, and for the scientific community to build on each other's findings. Transparency of methods and data availability is essential in all scientific fields and promotes more effecient progress in furthering understandings and discoveries. [(article)](https://www.nature.com/articles/d42473-019-00004-y)
 
-## Goals
+**Goals**
+-------
 We are focusing on assessing single cell data reproducibilty defined by:
-- regenerating computational figures
-- reproducing cell type annotation from re-clustering and analysis
-- looking at DGE analysis and seeing how this compares to published results
-- obtaining and reusing experimental metadata for figure generation
+* Regenerating computational figures
+* Reproducing cell type annotation from re-clustering and analysis
+* Looking at DGE analysis and seeing how this compares to published results
+* Obtaining and reusing experimental metadata for figure generation
 
+**Methods**
+-------
+* Choose dataset from HTAN data portal
+* Recreate data object from raw count matrix and obtain relevant metadata
+* Cluster and batch correct:
+	- [RPCA](https://www.rdocumentation.org/packages/rsvd/versions/1.0.5/topics/rpca) 
+	- [LIGER](https://github.com/welch-lab/liger)
+	- [fastMNN](https://rdrr.io/github/satijalab/seurat-wrappers/man/RunFastMNN.html)
 
 **Data download**
 -------
@@ -25,10 +35,15 @@ We are focusing on assessing single cell data reproducibilty defined by:
 
 
 ## Code
-- We have organized the code in the repo based off of the figure number in the original paper.
+* We have organized the code in the repo based off of the figure number in the original paper.
+
 
 ## Results
-- Given the raw count expression matrix and metadata from the publication supplemental documents, we've been able to regenerate very comparable figures from the publication.
+* Given the raw count expression matrix and metadata from the publication supplemental documents, we've been able to regenerate very comparable figures from the publication.
+* For panels that we cannot replicate, we showed qualitatively comparable results
+* The original study performed fastMNN integration to remove patient-specific heterogeneity, but during the data replication, we did not see any major differences in DEGs due to that. Therefore the integration was only targeting the patient-specific tumor heterogeneity. 
+
+![all_cells_reproduciibility.png]
 
 **Team**
 -------
