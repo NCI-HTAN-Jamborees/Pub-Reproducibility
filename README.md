@@ -54,7 +54,7 @@ We are focusing on assessing single cell data reproducibilty defined by:
 	- Finer details are desired for integration/clustering method.
 
 ![all_cells](all_cells_reproduciibility.png)
-![batch_correction](batch_coreection.png)
+![batch_correction](batch_correction.png)
 ![survival](survival.png)
 ![cluster22](cluster22.png)
 
