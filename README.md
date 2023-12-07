@@ -18,10 +18,11 @@ We are focusing on assessing single cell data reproducibilty defined by:
 -------
 * Choose dataset from HTAN data portal
 * Recreate data object from raw count matrix and obtain relevant metadata
-* Cluster and batch correct:
+* Cluster with Seurat and Scanpy workflows and batch correct:
 	- [RPCA](https://www.rdocumentation.org/packages/rsvd/versions/1.0.5/topics/rpca) 
 	- [LIGER](https://github.com/welch-lab/liger)
 	- [fastMNN](https://rdrr.io/github/satijalab/seurat-wrappers/man/RunFastMNN.html)
+* Assess reproducibility of publication figures
 
 **Data download**
 -------
@@ -39,8 +40,7 @@ We are focusing on assessing single cell data reproducibilty defined by:
 
 
 ## Results
-* Given the raw count expression matrix and metadata from the publication supplemental documents, we've been able to regenerate very comparable figures from the publication.
-* For panels that we cannot replicate, we showed qualitatively comparable results
+* Given the raw count expression matrix and metadata from the publication supplemental documents, we've been able to regenerate very comparable figures from the publication. For panels that we cannot replicate, we showed qualitatively comparable results
 * The original study performed fastMNN integration to remove patient-specific heterogeneity, but during the data replication, we did not see any major differences in DEGs due to that. Therefore the integration was only targeting the patient-specific tumor heterogeneity. 
 * Immune and mesenchymal clustering and cell type annotations were more readily reproducible as they did not contain a significant amount of inherit patient-specific heterogeneity.
 * Aspect that made reproducibility achievable:
@@ -48,7 +48,7 @@ We are focusing on assessing single cell data reproducibilty defined by:
 	- Donor id to map relevant experimental metadata to figures
 	- Code availability in github
 	- Cell type annotations accessible in Seurat and AnnData formats
-* Suggestion for FAIR standard:
+* Suggestion for [FAIR](https://www.nature.com/articles/sdata201618) standard:
 	- To better match the curated data object and the raw count matrices in GEO, authors should consider use the original barcodes from cellranger output.
 	- Elaboration of some initial processing is required to ensure better replication of the data (the cellphoneDB processing, for example)
 	- Finer details are desired for integration/clustering method.
@@ -63,4 +63,5 @@ We are focusing on assessing single cell data reproducibilty defined by:
 * **Linna Peng**, Genentech
 * **Jim Chaffer**, Stanford University
 
-**Acknowledge
+**Acknowledgements**
+We want to thank National Cancer Institute of the NIH and Human Tumor Atlas Network (HTAN) for putting together this event and providing an opportunity to explore data reproducibility.
