@@ -1,4 +1,4 @@
-# Publication Reproducibility
+# Evaluate the reproducibility of HTAN Publication
 NCI Human Tumor Atlas Network (HTAN) Data Jamboree | Dec. 4-7, 2023
 
 
@@ -22,6 +22,7 @@ We are focusing on assessing single cell data reproducibilty defined by:
 	- [RPCA](https://satijalab.org/seurat/articles/integration_rpca.html) 
 	- [LIGER](https://github.com/welch-lab/liger)
 	- [fastMNN](https://rdrr.io/github/satijalab/seurat-wrappers/man/RunFastMNN.html)
+	- [MAST](https://rglab.github.io/MAST/)
 * Assess reproducibility of publication figures
 
 **Data download**
