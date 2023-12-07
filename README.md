@@ -42,6 +42,16 @@ We are focusing on assessing single cell data reproducibilty defined by:
 * Given the raw count expression matrix and metadata from the publication supplemental documents, we've been able to regenerate very comparable figures from the publication.
 * For panels that we cannot replicate, we showed qualitatively comparable results
 * The original study performed fastMNN integration to remove patient-specific heterogeneity, but during the data replication, we did not see any major differences in DEGs due to that. Therefore the integration was only targeting the patient-specific tumor heterogeneity. 
+* Immune and mesenchymal clustering and cell type annotations were more readily reproducible as they did not contain a significant amount of inherit patient-specific heterogeneity.
+* Aspect that made reproducibility achievable:
+	- Raw counts gene expression matrix readily available
+	- Donor id to map relevant experimental metadata to figures
+	- Code availability in github
+	- Cell type annotations accessible in Seurat and AnnData formats
+* Suggestion for FAIR standard:
+	- To better match the curated data object and the raw count matrices in GEO, authors should consider use the original barcodes from cellranger output.
+	- Elaboration of some initial processing is required to ensure better replication of the data (the cellphoneDB processing, for example)
+	- Finer details are desired for integration/clustering method.
 
 ![all_cells](all_cells_reproduciibility.png)
 
@@ -52,3 +62,5 @@ We are focusing on assessing single cell data reproducibilty defined by:
 * **Jennifer Chien**, Stanford University
 * **Linna Peng**, Genentech
 * **Jim Chaffer**, Stanford University
+
+**Acknowledge
